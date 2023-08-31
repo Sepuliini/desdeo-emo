@@ -52,11 +52,11 @@ jobs:
       # Activate virtual environment and install dependencies
       - name: Activate virtual environment and install dependencies
         run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
+          if ($env:RUNNER_OS -eq "Windows") {
               .venv\Scripts\Activate
-          else
+          } else {
               source .venv/bin/activate
-          fi
+          }
           poetry install --no-interaction --no-root
 
       - name: Install library
@@ -64,10 +64,10 @@ jobs:
 
       - name: Run tests
         run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
+          if ($env:RUNNER_OS -eq "Windows") {
               .venv\Scripts\Activate
-          else
+          } else {
               source .venv/bin/activate
-          fi
+          }
           pip install pytest-rerunfailures
           pytest tests/ --reruns 10
